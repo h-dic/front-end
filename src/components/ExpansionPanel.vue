@@ -4,13 +4,13 @@
       <template v-slot:default="{ open }">
         <v-container fill-height fluid class="pa-0">
           <v-row no-gutters align="center">
-            <v-col cols="4">{{ title }}</v-col>
-            <v-col cols="8" class="text--secondary">
+            {{ title }}
+            <v-col auto-grow class="text--secondary">
               <v-fade-transition leave-absolute>
-                <span v-if="open" key="0">
+                <span v-if="open">
                   <slot name="openSubtext"></slot>
                 </span>
-                <span v-else key="1">
+                <span v-else>
                   <slot name="closeSubtext"></slot>
                 </span>
               </v-fade-transition>

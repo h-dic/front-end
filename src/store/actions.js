@@ -10,7 +10,7 @@ export default {
       .then(data => {
         console.log(data);
         const result = data;
-        commit("add_result", result);
+        commit("addResult", result);
       })
       .catch(error => console.log(error));
   }

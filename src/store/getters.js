@@ -5,10 +5,10 @@ export default {
   patientById: state => id => {
     return state.patients[id];
   },
-  medicaments: state => {
-    return state.medicaments;
+  drugs: state => {
+    return state.drugs;
   },
-  plantes: state => {
-    return state.plantes;
+  herbs: state => {
+    return state.herbs;
   }
 };

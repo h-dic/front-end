@@ -44,8 +44,8 @@ export default {
         name: "Settings"
       },
       {
-        path: "/patients",
-        name: "Patients"
+        path: "/search",
+        name: "Search"
       }
     ]
   })
