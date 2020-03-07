@@ -1,8 +1,9 @@
 export default {
+  result: {},
   patients: [
     {
       icon: "mdi-jellyfish",
-      color: "grey",
+      color: "purple",
       name: "Pierre",
       subtitle: "pas sûr pour l'ail"
     },

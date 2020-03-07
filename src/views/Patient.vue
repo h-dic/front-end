@@ -34,13 +34,14 @@
           >
           </ExpansionPanelSelector>
         </v-expansion-panels>
+        <!-- <v-btn color="success" @click="queryDB('a', 'b')">text</v-btn> -->
       </v-card-actions>
     </v-card>
   </v-container>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import ExpansionPanelSelector from "@/components/ExpansionPanelSelector";
 
 export default {
@@ -52,6 +53,9 @@ export default {
     selectedDrugs: [],
     selectedHerbs: []
   }),
+  methods: {
+    ...mapActions(["loadPost"])
+  },
   computed: {
     ...mapGetters(["patientById", "medicaments", "plantes"]),
     patient() {
