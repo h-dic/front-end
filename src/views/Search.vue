@@ -27,10 +27,7 @@ export default {
     ...mapActions(["loadPost"])
   },
   computed: {
-    ...mapGetters(["patientById", "drugs", "herbs"]),
-    patient() {
-      return this.patientById(this.$route.params["id"]);
-    }
+    ...mapGetters(["drugs", "herbs"])
   }
 };
 </script>

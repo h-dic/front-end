@@ -1,7 +1,7 @@
 <template>
   <v-autocomplete
-    v-model="selectedItems"
     :items="items"
+    :value="selectedItems"
     :label="question"
     :color="color"
     :prepend-icon="icon"
@@ -9,7 +9,7 @@
     multiple
     chips
     clearable
-    @input="$emit('input', $event)"
+    @input="updateSelection"
   >
     <!-- <template v-slot:selection="data">
       <v-chip
@@ -29,9 +29,17 @@
 <script>
 export default {
   name: "Autocomplete",
-  props: { items: Array, question: String, color: String, icon: String },
-  data: () => ({
-    selectedItems: []
-  })
+  props: {
+    items: Array,
+    selectedItems: Array,
+    question: String,
+    color: String,
+    icon: String
+  },
+  methods: {
+    updateSelection(event) {
+      this.$emit("input", event);
+    }
+  }
 };
 </script>

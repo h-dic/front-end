@@ -2,7 +2,7 @@
   <v-expansion-panel>
     <v-expansion-panel-header>
       {{ title }}
-      <slot name="closeSubtext"></slot>
+      <slot name="subtext"></slot>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
       <slot name="select"></slot>

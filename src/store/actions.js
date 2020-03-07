@@ -13,5 +13,12 @@ export default {
         commit("addResult", result);
       })
       .catch(error => console.log(error));
+  },
+  updateSelectedDrugs({ commit }, selectedDrugs) {
+    console.log(selectedDrugs);
+    commit("updateSelectedDrugs", selectedDrugs);
+  },
+  updateSelectedHerbs({ commit }, selectedHerbs) {
+    commit("updateSelectedHerbs", selectedHerbs);
   }
 };

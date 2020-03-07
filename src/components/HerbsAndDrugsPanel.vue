@@ -1,6 +1,6 @@
 <template>
   <ExpansionPanel title="Herbs and Drugs">
-    <template v-slot:closeSubtext>
+    <template v-slot:subtext>
       <SummaryChips
         :selectedDrugs="selectedDrugs"
         :selectedHerbs="selectedHerbs"
@@ -9,20 +9,21 @@
     </template>
     <template v-slot:select>
       <Autocomplete
-        v-model="selectedDrugs"
         :items="drugs"
+        :selectedItems="selectedDrugs"
         :question="questionDrugs"
         icon="mdi-pill"
         color="light-green"
-        @input="onChange($event)"
+        @input="updateSelectedDrugs($event)"
       >
       </Autocomplete>
       <Autocomplete
-        v-model="selectedHerbs"
         :items="herbs"
+        :selectedItems="selectedHerbs"
         :question="questionHerbs"
         icon="mdi-flower"
         color="light-blue"
+        @input="updateSelectedHerbs($event)"
       >
       </Autocomplete>
     </template>
@@ -43,23 +44,14 @@ export default {
     Autocomplete
   },
   data: () => ({
-    resultats: "Lorem ipsum dolor sit amets",
-    selectedDrugs: [],
-    selectedHerbs: [],
     questionDrugs: "Which drugs does the patient takes ?",
     questionHerbs: "Which herbs does the patient takes ?"
   }),
   methods: {
-    ...mapActions(["queryDB"]),
-    onChange(event) {
-      console.log(event);
-    }
+    ...mapActions(["updateSelectedDrugs", "updateSelectedHerbs"])
   },
   computed: {
-    ...mapGetters(["patientById", "drugs", "herbs"]),
-    patient() {
-      return this.patientById(this.$route.params["id"]);
-    }
+    ...mapGetters(["drugs", "herbs", "selectedDrugs", "selectedHerbs"])
   }
 };
 </script>
