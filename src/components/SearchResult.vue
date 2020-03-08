@@ -20,6 +20,23 @@
         :loading="loading"
         loading-text="Loading... Please wait"
       >
+        <template v-slot:item.info="{ item }">
+          <v-dialog width="500">
+            <template v-slot:activator="{ on }">
+              <v-btn icon v-on="on">
+                <v-icon>mdi-information</v-icon>
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title class="headline grey lighten-2" primary-title>
+                Plus d'infos
+              </v-card-title>
+              <v-card-text>
+                {{ item }}
+              </v-card-text>
+            </v-card>
+          </v-dialog>
+        </template>
         <template v-slot:item.intensity="{ item }">
           <v-chip :color="getColor(item.intensity)" light>{{
             item.intensity
@@ -64,10 +81,11 @@ export default {
   name: "SearchResult",
   data: () => ({
     headers: [
+      { text: "", value: "data-table-expand" },
       { text: "Drugs", value: "drug" },
       { text: "Herbs", value: "herb" },
       { text: "Intensity", value: "intensity" },
-      { text: "", value: "data-table-expand" }
+      { text: "", value: "info" }
     ],
     expanded: []
   }),

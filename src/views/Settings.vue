@@ -1,89 +1,83 @@
 <template>
-  <div>
-    <v-data-table :headers="headers" :items="indexedItems" item-key="id">
-      <template v-slot:item="{ item, isExpanded }">
-        {{ isExpanded }}
-        <tr @click="isExpanded = !isExpanded">
-          <td class="text-xs-right">{{ item.calories }}</td>
-          <td class="text-xs-right">{{ item.fat }}</td>
-          <td class="text-xs-right">{{ item.carbs }}</td>
-          <td class="text-xs-right">{{ item.protein }}</td>
-          <td class="text-xs-right">{{ item.iron }}</td>
-        </tr>
-      </template>
-      <template slot="expand" slot-scope="props">
-        <v-card flat>
-          <v-card-text class="red--text">qq {{ props }}</v-card-text>
+  <v-container fill-height>
+    <v-row class="justify-center">
+      <v-col cols="8">
+        <v-card max-width="475" class="mx-auto">
+          <v-toolbar color="green lighten-1" dark>
+            <v-toolbar-title>Settings</v-toolbar-title>
+          </v-toolbar>
+
+          <v-list subheader two-line flat>
+            <v-subheader>Databases</v-subheader>
+
+            <v-list-item-group multiple>
+              <v-list-item v-for="(database, index) in databases" :key="index">
+                <v-list-item-action>
+                  <v-checkbox :value="true" color="primary"></v-checkbox>
+                </v-list-item-action>
+
+                <v-list-item-content>
+                  <v-list-item-title>
+                    {{ database.name }}
+                    <v-btn icon :href="database.href" target="_blank" link>
+                      <v-icon>mdi-open-in-new</v-icon>
+                    </v-btn>
+                  </v-list-item-title>
+                  <v-list-item-subtitle>
+                    {{ database.description }}
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+
+          <v-divider></v-divider>
+
+          <v-list two-line subheader>
+            <v-subheader>Others</v-subheader>
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>Language</v-list-item-title>
+                <v-list-item-subtitle>Current : English</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>Display mode</v-list-item-title>
+                <v-list-item-subtitle>Current : light</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
         </v-card>
-      </template>
-    </v-data-table>
-  </div>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      headers: [
-        {
-          text: "Dessert (100g serving)",
-          align: "left",
-          sortable: false,
-          value: "name"
-        },
-        { text: "Calories", value: "calories" },
-        { text: "Fat (g)", value: "fat" },
-        { text: "Carbs (g)", value: "carbs" },
-        { text: "Protein (g)", value: "protein" },
-        { text: "Iron (%)", value: "iron" }
-      ],
-      items: [
-        {
-          value: false,
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: "1%"
-        },
-        {
-          value: false,
-          name: "Eclair",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: "1%"
-        },
-        {
-          value: false,
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: "7%"
-        },
-        {
-          value: false,
-          name: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: "8%"
-        }
-      ]
-    };
-  },
-  computed: {
-    indexedItems() {
-      return this.items.map((item, index) => ({
-        id: index,
-        ...item
-      }));
-    }
-  }
+  name: "Settings",
+  data: () => ({
+    databases: [
+      {
+        name: "Hedrine",
+        description: "Herb Drug Interaction Database",
+        href: "https://hedrine.univ-grenoble-alpes.fr"
+      },
+      {
+        name: "MSKCC",
+        description: "Memorial Sloan Kettering Cancer Center",
+        href:
+          "https://www.mskcc.org/cancer-care/diagnosis-treatment/symptom-management/integrative-medicine/herbs/search"
+      },
+      {
+        name: "DDI Predictor",
+        description: "HQuantitative prediction of drug drug interactions",
+        href: "https://www.ddi-predictor.org/predictor/ddi/"
+      }
+    ]
+  })
 };
 </script>
