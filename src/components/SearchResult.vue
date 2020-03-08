@@ -32,7 +32,11 @@
                 Plus d'infos
               </v-card-title>
               <v-card-text>
-                {{ item }}
+                <v-list dense>
+                  <v-list-item v-for="(value, index) in item" :key="index">
+                    {{ value }}
+                  </v-list-item>
+                </v-list>
               </v-card-text>
             </v-card>
           </v-dialog>
@@ -46,15 +50,19 @@
           <td :colspan="headers.length" class="pa-0 elevation-0">
             <v-card flat class="ma-2">
               <v-card-title primary-title>
-                Consequences ({{ item.interactions.length }}) :
+                Consequences ({{
+                  uniqueConsequences(item.interactions).length
+                }}) :
               </v-card-title>
               <v-card-text>
                 <v-list dense>
                   <v-list-item
-                    v-for="(interaction, index) in item.interactions"
+                    v-for="(consequence, index) in uniqueConsequences(
+                      item.interactions
+                    )"
                     :key="index"
                   >
-                    {{ interaction }}
+                    {{ consequence }}
                   </v-list-item>
                 </v-list>
               </v-card-text>
@@ -104,6 +112,11 @@ export default {
         case "aucune":
           return "white";
       }
+    },
+    uniqueConsequences(interactions) {
+      return [
+        ...new Set(interactions.map(interaction => interaction.consequence))
+      ];
     }
   },
   computed: {

@@ -13,7 +13,10 @@
             <v-list-item-group multiple>
               <v-list-item v-for="(database, index) in databases" :key="index">
                 <v-list-item-action>
-                  <v-checkbox :value="true" color="primary"></v-checkbox>
+                  <v-checkbox
+                    v-model="database.used"
+                    color="primary"
+                  ></v-checkbox>
                 </v-list-item-action>
 
                 <v-list-item-content>
@@ -63,17 +66,20 @@ export default {
     databases: [
       {
         name: "Hedrine",
+        used: true,
         description: "Herb Drug Interaction Database",
         href: "https://hedrine.univ-grenoble-alpes.fr"
       },
       {
         name: "MSKCC",
+        used: true,
         description: "Memorial Sloan Kettering Cancer Center",
         href:
           "https://www.mskcc.org/cancer-care/diagnosis-treatment/symptom-management/integrative-medicine/herbs/search"
       },
       {
         name: "DDI Predictor",
+        used: true,
         description: "HQuantitative prediction of drug drug interactions",
         href: "https://www.ddi-predictor.org/predictor/ddi/"
       }
