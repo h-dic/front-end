@@ -48,6 +48,14 @@ export default {
         name: "Search"
       }
     ]
-  })
+  }),
+  watch: {
+    $route(to) {
+      document.title = "H-DIC / " + to.name;
+    }
+  },
+  mounted() {
+    document.title = "H-DIC / " + this.$route.name;
+  }
 };
 </script>
