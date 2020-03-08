@@ -16,7 +16,6 @@
         item-key="id"
         show-expand
         single-expand
-        hide-default-footer
         :loading="loading"
         loading-text="Loading... Please wait"
       >
