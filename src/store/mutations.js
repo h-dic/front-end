@@ -16,5 +16,12 @@ export default {
   updateSelectedHerbs(state, selectedHerbs) {
     state.selectedHerbs = selectedHerbs;
     state.isResultUpToDate = false;
+  },
+
+  updateDrugs(state, drugs) {
+    state.drugs = drugs;
+  },
+  updateHerbs(state, herbs) {
+    state.herbs = herbs;
   }
 };

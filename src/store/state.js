@@ -23,5 +23,12 @@ export default {
     "Eucalyptus"
   ],
   selectedDrugs: [],
-  selectedHerbs: []
+  selectedHerbs: [],
+  intensities: [
+    { name: "forte", color: "red" },
+    { name: "moyenne", color: "orange" },
+    { name: "faible", color: "yellow" },
+    { name: "inconnue", color: "purple" },
+    { name: "aucune", color: "white" }
+  ]
 };

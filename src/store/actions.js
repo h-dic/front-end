@@ -11,8 +11,8 @@ const getPairInteractions = async (drug, herb) => {
   }
 };
 
-const highestIntensity = intensities => {
-  const names = ["forte", "moyenne", "faible", "inconnue", "aucune"];
+const highestIntensity = (intensities, state) => {
+  const names = state.intensities.map(intensity => intensity.name);
   for (const name of names) {
     if (intensities.includes(name)) {
       return name;
@@ -20,7 +20,7 @@ const highestIntensity = intensities => {
   }
 };
 
-const addInteractionToResut = async (results, drug, herb) => {
+const addInteractionToResut = async (results, drug, herb, state) => {
   const pair = await getPairInteractions(drug, herb);
   if (Array.isArray(pair) && pair.length > 0) {
     const intensities = [];
@@ -41,25 +41,48 @@ const addInteractionToResut = async (results, drug, herb) => {
     results.push({
       drug,
       herb,
-      intensity: highestIntensity(intensities),
+      intensity: highestIntensity(intensities, state),
       interactions
     });
   }
 };
 
 export default {
-  async queryDB({ commit, state }) {
+  async queryPair({ commit, state }) {
     const results = [];
     commit("updateLoading", true);
     commit("updateResults", results);
     for (const drug of state.selectedDrugs) {
       for (const herb of state.selectedHerbs) {
-        await addInteractionToResut(results, drug, herb);
+        await addInteractionToResut(results, drug, herb, state);
         commit("updateResults", results);
       }
     }
     commit("updateLoading", false);
     commit("updateIsResultUpToDate", true);
+  },
+
+  async queryDrugs({ commit }) {
+    const url = "http://localhost:8000/search/apiDrugs/";
+    try {
+      const data = await Axios.get(url);
+      const drugs = data.data.results.map(item => item["nom_drug"]);
+      console.log(drugs);
+      commit("updateDrugs", drugs);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async queryHerbs({ commit }) {
+    const url = "http://localhost:8000/search/apiHerbs/";
+    try {
+      const data = await Axios.get(url);
+      const herbs = data.data.results.map(item => item["nom_herb"]);
+      console.log(herbs);
+      commit("updateHerbs", herbs);
+    } catch (error) {
+      console.log(error);
+    }
   },
 
   updateSelectedDrugs({ commit }, selectedDrugs) {

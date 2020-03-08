@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "App",
 
@@ -49,6 +51,9 @@ export default {
       }
     ]
   }),
+  methods: {
+    ...mapActions(["queryDrugs", "queryHerbs"])
+  },
   watch: {
     $route(to) {
       document.title = "H-DIC / " + to.name;
@@ -56,6 +61,8 @@ export default {
   },
   mounted() {
     document.title = "H-DIC / " + this.$route.name;
+    this.queryDrugs();
+    this.queryHerbs();
   }
 };
 </script>

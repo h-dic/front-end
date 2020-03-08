@@ -21,5 +21,9 @@ export default {
   },
   isResultUpToDate: state => {
     return state.isResultUpToDate;
+  },
+
+  intensities: state => {
+    return state.intensities;
   }
 };

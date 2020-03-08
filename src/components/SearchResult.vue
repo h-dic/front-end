@@ -3,7 +3,7 @@
     <v-card-title primary-title>
       Results
       <v-spacer></v-spacer>
-      <v-btn color="success" @click="queryDB" :disabled="isResultUpToDate">
+      <v-btn color="success" @click="queryPair" :disabled="isResultUpToDate">
         <template v-if="isResultUpToDate">up-to-date</template>
         <template v-else>Search</template>
       </v-btn>
@@ -17,8 +17,11 @@
         show-expand
         single-expand
         :loading="loading"
+        disable-pagination
+        hide-default-footer
         loading-text="Loading... Please wait"
       >
+        <!-- :custom-sort="customSort" -->
         <template v-slot:item.info="{ item }">
           <v-dialog width="500">
             <template v-slot:activator="{ on }">
@@ -91,27 +94,45 @@ export default {
       { text: "", value: "data-table-expand" },
       { text: "Drugs", value: "drug" },
       { text: "Herbs", value: "herb" },
-      { text: "Intensity", value: "intensity" },
+      { text: "Intensities", value: "intensity" },
       { text: "", value: "info" }
     ],
     expanded: []
   }),
   methods: {
-    ...mapActions(["queryDB"]),
+    ...mapActions(["queryPair"]),
     getColor(intensity) {
-      switch (intensity) {
-        case "forte":
-          return "red";
-        case "moyenne":
-          return "yellow";
-        case "faible":
-          return "green";
-        case "inconnue":
-          return "blue";
-        case "aucune":
-          return "white";
+      for (const item of this.intensities) {
+        if (item.name === intensity) {
+          return item.color;
+        }
       }
+      return "blue";
     },
+    customSort(items, index, isDescending) {
+      const intensityValue = intensity => {
+        const value = this.intensities.findIndex(
+          item => item.name === intensity
+        );
+        if (value) {
+          return value;
+        }
+        return -1;
+      };
+      if (index[0] === "intensity") {
+        items.sort((a, b) => {
+          if (isDescending) {
+            return intensityValue(b) - intensityValue(a);
+          } else {
+            return intensityValue(a) - intensityValue(b);
+          }
+        });
+      } else {
+        items.sort();
+      }
+      return items;
+    },
+
     uniqueConsequences(interactions) {
       return [
         ...new Set(interactions.map(interaction => interaction.consequence))
@@ -119,7 +140,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["results", "loading", "isResultUpToDate"]),
+    ...mapGetters(["results", "loading", "isResultUpToDate", "intensities"]),
     indexedResults() {
       return this.results.map((item, index) => ({
         id: index,
