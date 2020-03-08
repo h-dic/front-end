@@ -46,8 +46,8 @@ export default {
     Autocomplete
   },
   data: () => ({
-    questionDrugs: "Which drugs does the patient takes ?",
-    questionHerbs: "Which herbs does the patient takes ?"
+    questionDrugs: "Which drugs does the patient take ?",
+    questionHerbs: "Which herbs does the patient take ?"
   }),
   methods: {
     ...mapActions(["updateSelectedDrugs", "updateSelectedHerbs"])
