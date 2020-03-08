@@ -1,14 +1,13 @@
 <template>
   <div>
     <v-expansion-panels accordion :value="0">
-      <HerbsAndDrugsPanel v-model="selectedHerbs"> </HerbsAndDrugsPanel>
+      <HerbsAndDrugsPanel></HerbsAndDrugsPanel>
     </v-expansion-panels>
     <SearchResult></SearchResult>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
 import HerbsAndDrugsPanel from "@/components/HerbsAndDrugsPanel";
 import SearchResult from "@/components/SearchResult";
 
@@ -17,17 +16,6 @@ export default {
   components: {
     HerbsAndDrugsPanel,
     SearchResult
-  },
-  data: () => ({
-    SearchResults: "Lorem ipsum dolor sit amets",
-    selectedDrugs: [],
-    selectedHerbs: []
-  }),
-  methods: {
-    ...mapActions(["loadPost"])
-  },
-  computed: {
-    ...mapGetters(["drugs", "herbs"])
   }
 };
 </script>

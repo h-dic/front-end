@@ -3,23 +3,99 @@
     <v-card-title primary-title>
       Results
       <v-spacer></v-spacer>
-      <v-btn color="success" @click="$emit('click')">Search</v-btn>
+      <v-btn color="success" @click="queryDB" :disabled="isResultUpToDate">
+        <template v-if="isResultUpToDate">up-to-date</template>
+        <template v-else>Search</template>
+      </v-btn>
     </v-card-title>
     <v-card-text>
-      <div v-for="(item, index) in selectedDrugs" :key="index">
-        {{ item }}
-      </div>
+      <v-data-table
+        :headers="headers"
+        :items="indexedResults"
+        :expanded.sync="expanded"
+        item-key="id"
+        show-expand
+        single-expand
+        hide-default-footer
+        :loading="loading"
+        loading-text="Loading... Please wait"
+      >
+        <template v-slot:item.intensity="{ item }">
+          <v-chip :color="getColor(item.intensity)" light>{{
+            item.intensity
+          }}</v-chip>
+        </template>
+        <template v-slot:expanded-item="{ item, headers }">
+          <td :colspan="headers.length" class="pa-0 elevation-0">
+            <v-card flat class="ma-2">
+              <v-card-title primary-title>
+                Consequences ({{ item.interactions.length }}) :
+              </v-card-title>
+              <v-card-text>
+                <v-list dense>
+                  <v-list-item
+                    v-for="(interaction, index) in item.interactions"
+                    :key="index"
+                  >
+                    {{ interaction }}
+                  </v-list-item>
+                </v-list>
+              </v-card-text>
+            </v-card>
+          </td>
+        </template>
+        <!-- <template v-slot:item="{ item, expand, isExpanded, headers }">
+          {{ isExpanded }}
+          <tr>
+            <td v-for="(header, index) in headers" :key="index">
+              {{ item[header.value] }}
+            </td>
+          </tr>
+        </template> -->
+      </v-data-table>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "SearchResult",
+  data: () => ({
+    headers: [
+      { text: "Drugs", value: "drug" },
+      { text: "Herbs", value: "herb" },
+      { text: "Intensity", value: "intensity" },
+      { text: "", value: "data-table-expand" }
+    ],
+    expanded: []
+  }),
+  methods: {
+    ...mapActions(["queryDB"]),
+    getColor(intensity) {
+      switch (intensity) {
+        case "forte":
+          return "red";
+        case "moyenne":
+          return "yellow";
+        case "faible":
+          return "green";
+        case "inconnue":
+          return "blue";
+        case "aucune":
+          return "white";
+      }
+    }
+  },
   computed: {
-    ...mapGetters(["selectedDrugs", "selectedHerbs"])
+    ...mapGetters(["results", "loading", "isResultUpToDate"]),
+    indexedResults() {
+      return this.results.map((item, index) => ({
+        id: index,
+        ...item
+      }));
+    }
   }
 };
 </script>

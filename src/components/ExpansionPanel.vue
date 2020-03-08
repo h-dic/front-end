@@ -1,6 +1,6 @@
 <template>
   <v-expansion-panel>
-    <v-expansion-panel-header>
+    <v-expansion-panel-header class="d-flex title">
       {{ title }}
       <slot name="subtext"></slot>
     </v-expansion-panel-header>

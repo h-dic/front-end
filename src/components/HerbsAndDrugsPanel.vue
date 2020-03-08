@@ -4,6 +4,8 @@
       <SummaryChips
         :selectedDrugs="selectedDrugs"
         :selectedHerbs="selectedHerbs"
+        drugsColor="light-blue"
+        herbsColor="light-green"
       >
       </SummaryChips>
     </template>
@@ -13,7 +15,7 @@
         :selectedItems="selectedDrugs"
         :question="questionDrugs"
         icon="mdi-pill"
-        color="light-green"
+        color="light-blue"
         @input="updateSelectedDrugs($event)"
       >
       </Autocomplete>
@@ -22,7 +24,7 @@
         :selectedItems="selectedHerbs"
         :question="questionHerbs"
         icon="mdi-flower"
-        color="light-blue"
+        color="light-green"
         @input="updateSelectedHerbs($event)"
       >
       </Autocomplete>

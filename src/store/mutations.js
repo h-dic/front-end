@@ -1,11 +1,20 @@
 export default {
-  addResult(state, result) {
-    state.result = result;
+  updateResults(state, results) {
+    state.results = results;
   },
+  updateLoading(state, loading) {
+    state.loading = loading;
+  },
+  updateIsResultUpToDate(state, isResultUpToDate) {
+    state.isResultUpToDate = isResultUpToDate;
+  },
+
   updateSelectedDrugs(state, selectedDrugs) {
     state.selectedDrugs = selectedDrugs;
+    state.isResultUpToDate = false;
   },
   updateSelectedHerbs(state, selectedHerbs) {
     state.selectedHerbs = selectedHerbs;
+    state.isResultUpToDate = false;
   }
 };
