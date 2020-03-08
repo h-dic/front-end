@@ -1,4 +1,4 @@
-# vuetify_json
+# Front-end with vue, vuetify and axios
 
 ## Project setup
 ```
